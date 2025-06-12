@@ -6,8 +6,13 @@ import type { Book } from "@/types";
 const filePath = path.join(process.cwd(), "data", "books.json");
 
 async function readBooks(): Promise<Book[]> {
-  const file = await fs.readFile(filePath, "utf-8");
-  return JSON.parse(file);
+  try {
+    const file = await fs.readFile(filePath, "utf-8");
+    return JSON.parse(file);
+  } catch (error) {
+    console.error("Error reading or parsing books file:", error);
+    throw new Error("Failed to read books data.");
+  }
 }
 
 async function writeBooks(books: Book[]) {
@@ -43,14 +48,24 @@ export async function GET(req: NextRequest) {
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
+
     if (!body.title || !body.author) {
       return NextResponse.json(
         { error: "Missing title or author" },
         { status: 400 }
       );
     }
-
     const books = await readBooks();
+
+    const isDuplicate = books.some(
+      (book) => book.title.toLowerCase() === body.title.toLowerCase()
+    );
+    if (isDuplicate) {
+      return NextResponse.json(
+        { error: `Book with that name already exists.` },
+        { status: 500 }
+      );
+    }
     const newBook: Book = {
       id: Date.now().toString(),
       title: body.title,

@@ -12,8 +12,9 @@ async function readBooks(): Promise<Book[]> {
 
 // GET /api/books/:id
 export async function GET(_: Request, { params }: { params: { id: string } }) {
+  const { id } = await params;
   const books = await readBooks();
-  const book = books.find((b) => b.id === params.id);
+  const book = books.find((b) => b.id === id);
   return book
     ? NextResponse.json(book)
     : NextResponse.json({ error: "Not found" }, { status: 404 });

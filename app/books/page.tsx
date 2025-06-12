@@ -37,36 +37,38 @@ export default function BooksPage() {
           <Link href={"/"}>Back to Home page</Link>
           <Link href={`/books/new`}>Add book</Link>
         </div>
-        <div className="pagination">
-          <button
-            onClick={() => setPage((p) => Math.max(p - 1, 1))}
-            disabled={page === 1}
-            className={`pagination-btn ${page === 1 ? "disabled" : ""}`}
-          >
-            ←
-          </button>
-          {[...Array(totalPages)].map((_, index) => {
-            const pageNumber = index + 1;
-            return (
-              <button
-                key={pageNumber}
-                className={`numPage ${page === pageNumber ? "active" : ""}`}
-                onClick={() => setPage(pageNumber)}
-              >
-                {pageNumber}
-              </button>
-            );
-          })}
-          <button
-            onClick={() => setPage((p) => Math.min(p + 1, totalPages))}
-            disabled={page === totalPages}
-            className={`pagination-btn ${
-              page === totalPages ? "disabled" : ""
-            }`}
-          >
-            →
-          </button>
-        </div>
+        {books.length !== 0 && (
+          <div className="pagination">
+            <button
+              onClick={() => setPage((p) => Math.max(p - 1, 1))}
+              disabled={page === 1}
+              className={`pagination-btn ${page === 1 ? "disabled" : ""}`}
+            >
+              ←
+            </button>
+            {[...Array(totalPages)].map((_, index) => {
+              const pageNumber = index + 1;
+              return (
+                <button
+                  key={pageNumber}
+                  className={`numPage ${page === pageNumber ? "active" : ""}`}
+                  onClick={() => setPage(pageNumber)}
+                >
+                  {pageNumber}
+                </button>
+              );
+            })}
+            <button
+              onClick={() => setPage((p) => Math.min(p + 1, totalPages))}
+              disabled={page === totalPages}
+              className={`pagination-btn ${
+                page === totalPages ? "disabled" : ""
+              }`}
+            >
+              →
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );

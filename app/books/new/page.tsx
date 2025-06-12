@@ -45,7 +45,7 @@ export default function AddBookPage() {
       router.push("/books");
     } else {
       const error = await res.json();
-      alert("Ошибка: " + error.error);
+      alert("Error: " + error.error);
     }
   };
 
@@ -67,6 +67,7 @@ export default function AddBookPage() {
                   className="book-new-input"
                   id={name}
                   name={name}
+                  value={form[name]}
                   onChange={changeHandler}
                 />
               ) : (
@@ -74,6 +75,7 @@ export default function AddBookPage() {
                   id={name}
                   name={name}
                   placeholder={label}
+                  value={form[name]}
                   className="book-new-input"
                   onChange={changeHandler}
                   required
