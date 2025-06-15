@@ -1,29 +1,31 @@
-"use client";
-
-import { useEffect, useState } from "react";
-import type { Book } from "@/types";
 import Link from "next/link";
-import Loading from "../components/loading";
+import Loading from "../../components/loading";
+import { BooksResponse } from "@/types";
+import Pagination from "@/components/Pagination";
 
-export default function BooksPage() {
-  const [books, setBooks] = useState<Book[] | null>(null);
-  const [page, setPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
-  useEffect(() => {
-    fetch(`/api/books?page=${page}&limit=5`)
-      .then((res) => res.json())
-      .then((data) => {
-        setBooks(data.data);
-        setTotalPages(data.totalPages);
-      });
-  }, [page]);
+interface Props {
+  searchParams: Record<string, string[] | undefined>;
+}
 
-  if (!books) return <Loading />;
+export default async function BooksPage({ searchParams }: Props) {
+  const { page } = await searchParams;
+  const numberPage = Number(page) || 1;
+
+  const res = await fetch(
+    `http://localhost:3000/api/books?page=${numberPage}&limit=5`,
+    {
+      cache: "no-cache",
+    }
+  );
+
+  if (!res.ok) return <Loading />;
+
+  const { data: books, totalPages }: BooksResponse = await res.json();
 
   return (
     <div className="container">
       <div className="book-blog">
-        <h1>📚 Книги — страница {page}</h1>
+        <h1>📚 Книги — страница {numberPage}</h1>
         <ul className="book-list">
           {books.map((book) => (
             <li key={book.id}>
@@ -38,36 +40,11 @@ export default function BooksPage() {
           <Link href={`/books/new`}>Add book</Link>
         </div>
         {books.length !== 0 && (
-          <div className="pagination">
-            <button
-              onClick={() => setPage((p) => Math.max(p - 1, 1))}
-              disabled={page === 1}
-              className={`pagination-btn ${page === 1 ? "disabled" : ""}`}
-            >
-              ←
-            </button>
-            {[...Array(totalPages)].map((_, index) => {
-              const pageNumber = index + 1;
-              return (
-                <button
-                  key={pageNumber}
-                  className={`numPage ${page === pageNumber ? "active" : ""}`}
-                  onClick={() => setPage(pageNumber)}
-                >
-                  {pageNumber}
-                </button>
-              );
-            })}
-            <button
-              onClick={() => setPage((p) => Math.min(p + 1, totalPages))}
-              disabled={page === totalPages}
-              className={`pagination-btn ${
-                page === totalPages ? "disabled" : ""
-              }`}
-            >
-              →
-            </button>
-          </div>
+          <Pagination
+            currentPage={numberPage}
+            totalPages={totalPages}
+            basePath="/books"
+          />
         )}
       </div>
     </div>

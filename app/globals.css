@@ -60,6 +60,10 @@ textarea {
     gap: 10px;
 }
 
+.numPage {
+    text-align: center;
+}
+
 .numPage.active {
     background: rgb(28, 148, 233);
     width: 25px;
@@ -97,6 +101,7 @@ textarea {
 }
 
 .book-new-input {
+    padding: 5px;
     margin-left: 15px;
     border: 1px solid rgba(0, 0, 0, 0.167);
 }

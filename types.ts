@@ -15,3 +15,11 @@ export type FormFiled = {
 export type FormData = {
   [key in FieldName]: string;
 };
+
+export type BooksResponse = {
+  data: Book[];
+  page: number;
+  limit: number;
+  total: number;
+  totalPages: number;
+};
