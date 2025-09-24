@@ -12,7 +12,7 @@ export default async function BooksPage({ searchParams }: Props) {
   const numberPage = Number(page) || 1;
 
   const res = await fetch(
-    `http://localhost:3000/api/books?page=${numberPage}&limit=5`,
+    `https://book-store-github-io-omega.vercel.app/api/books?page=${numberPage}&limit=5`,
     {
       cache: "no-cache",
     }
