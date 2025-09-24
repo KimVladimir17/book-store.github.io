@@ -4,9 +4,9 @@ export default function HomePage() {
   return (
     <div className="container">
       <main className="main">
-        <h1>📚 Добро пожаловать в библиотеку</h1>
-        <Link href={`/books`}>
-          Перейдите , чтобы посмотреть список книг с пагинацией.
+        <h1>📚 Welcome to the library</h1>
+        <Link className="main-link" href={`/books`}>
+          Go to see the list of books with pagination.
         </Link>
       </main>
     </div>

@@ -25,7 +25,7 @@ export default async function BooksPage({ searchParams }: Props) {
   return (
     <div className="container">
       <div className="book-blog">
-        <h1>📚 Книги — страница {numberPage}</h1>
+        <h1>📚 Books — page {numberPage}</h1>
         <ul className="book-list">
           {books.map((book) => (
             <li key={book.id}>

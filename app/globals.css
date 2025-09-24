@@ -1,5 +1,13 @@
 @import "tailwindcss";
 
+
+
+.main-link {
+    cursor: pointer;
+    text-decoration: underline;
+    color: rgb(40, 201, 201);
+}
+
 button {
     cursor: pointer;
 }
