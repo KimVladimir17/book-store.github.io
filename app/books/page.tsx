@@ -4,7 +4,7 @@ import { BooksResponse } from "@/types";
 import Pagination from "@/components/Pagination";
 
 interface Props {
-  searchParams: Record<string, string[] | undefined>;
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }
 
 export default async function BooksPage({ searchParams }: Props) {

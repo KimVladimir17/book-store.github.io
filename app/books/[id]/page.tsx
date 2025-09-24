@@ -3,12 +3,14 @@ import type { Book } from "@/types"; // если используешь типы
 import Link from "next/link";
 
 type Params = {
-  params: {
-    id: string;
-  };
+  id: string;
 };
 
-export default async function BookPage({ params }: Params) {
+export default async function BookPage({
+  params,
+}: {
+  params: Promise<Params>;
+}) {
   const { id } = await params;
   const res = await fetch(`http://localhost:3000/api/books/${id}`, {
     cache: "no-store",
