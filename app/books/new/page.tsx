@@ -33,7 +33,7 @@ export default function AddBookPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const res = await fetch("/api/books", {
+    const res = await fetch("https://book-store-github-io-omega.vercel.app/api/books", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(form),

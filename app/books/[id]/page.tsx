@@ -12,9 +12,12 @@ export default async function BookPage({
   params: Promise<Params>;
 }) {
   const { id } = await params;
-  const res = await fetch(`http://localhost:3000/api/books/${id}`, {
-    cache: "no-store",
-  });
+  const res = await fetch(
+    `https://book-store-github-io-omega.vercel.app/api/books/${id}`,
+    {
+      cache: "no-store",
+    }
+  );
   if (!res.ok) {
     return notFound();
   }
